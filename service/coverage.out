@@ -1,0 +1,17 @@
+mode: set
+service/post_service_mock.go:26.69,30.2 3 0
+service/post_service_mock.go:33.67,35.2 1 0
+service/post_service_mock.go:38.61,44.2 5 0
+service/post_service_mock.go:47.64,50.2 2 0
+service/post_service_mock.go:53.74,59.2 5 0
+service/post_service_mock.go:62.77,65.2 2 0
+service/post_service_mock.go:68.62,73.2 4 0
+service/post_service_mock.go:76.81,79.2 2 0
+service/post_service.go:22.61,24.2 1 1
+service/post_service.go:26.52,27.17 1 1
+service/post_service.go:30.2,30.22 1 1
+service/post_service.go:33.2,33.12 1 1
+service/post_service.go:27.17,29.3 1 1
+service/post_service.go:30.22,32.3 1 1
+service/post_service.go:36.64,41.2 3 1
+service/post_service.go:43.51,45.2 1 1
