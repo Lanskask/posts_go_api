@@ -1,0 +1,1 @@
+export GOOGLE_APPLICATION_CREDENTIALS=./posts-api-599c6-firebase-adminsdk-s49o2-35075e1590.json
