@@ -5,10 +5,11 @@ import (
 )
 
 const (
-	collectionName = "posts"
+	tableName = "posts"
 )
 
-type IPostRepo interface {
+type PostRepo interface {
 	Save(post *entity.Post) (*entity.Post, error)
 	FindAll() ([]entity.Post, error)
+	Delete(post *entity.Post) (int64, error)
 }

@@ -50,7 +50,7 @@ func (c postController) AddPost(resp http.ResponseWriter, req *http.Request) {
 
 	saved, err := c.service.Save(&post)
 	if err != nil {
-		processErr(resp, fmt.Sprintf("Error saving post into repo: %s", err))
+		processErr(resp, fmt.Sprintf("error saving post into repo: %s", err))
 		return
 	}
 

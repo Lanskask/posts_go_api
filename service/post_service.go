@@ -16,10 +16,10 @@ type IPostService interface {
 }
 
 type service struct {
-	repo repository.IPostRepo
+	repo repository.PostRepo
 }
 
-func NewPostService(repo repository.IPostRepo) IPostService {
+func NewPostService(repo repository.PostRepo) IPostService {
 	return &service{repo: repo}
 }
 

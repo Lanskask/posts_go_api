@@ -15,7 +15,8 @@ func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	config.LoadConfig()
 
-	repo := repository.NewFirebaseRepo()
+	//repo, _ := repository.NewFirebaseRepo()
+	repo, _ := repository.NewSQLiteRepo()
 	postService := service.NewPostService(repo)
 	postController := controller.NewPostController(postService)
 

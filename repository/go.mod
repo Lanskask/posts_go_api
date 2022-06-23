@@ -12,8 +12,8 @@ require (
 	config v0.0.0-00010101000000-000000000000
 	entity v0.0.0-00010101000000-000000000000
 	firebase.google.com/go v3.13.0+incompatible
-	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-multierror v1.1.1
+	github.com/mattn/go-sqlite3 v1.14.13
 	google.golang.org/api v0.84.0
 )
 

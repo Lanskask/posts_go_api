@@ -21,6 +21,12 @@ func (mock *MockRepository) Save(post *entity.Post) (*entity.Post, error) {
 	return result.(*entity.Post), args.Error(1)
 }
 
+func (mock *MockRepository) Delete(post *entity.Post) (int64, error) {
+	args := mock.Called(post)
+	result := args.Get(0)
+	return result.(int64), args.Error(1)
+}
+
 func (mock *MockRepository) FindAll() ([]entity.Post, error) {
 	args := mock.Called()
 	result := args.Get(0)
@@ -61,7 +67,7 @@ func TestFindAll(t *testing.T) {
 func Test_service_Validate(t *testing.T) {
 	tests := []struct {
 		name    string
-		repo    repository.IPostRepo
+		repo    repository.PostRepo
 		post    *entity.Post
 		wantErr bool
 		expErr  error
