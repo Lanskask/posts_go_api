@@ -7,30 +7,55 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
-func Test_service_Save(t *testing.T) {
-	ctrl := gomock.NewController(t)
+type MockRepository struct {
+	mock.Mock
+}
 
-	// Assert that Bar() is invoked.
-	defer ctrl.Finish()
+func (mock *MockRepository) Save(post *entity.Post) (*entity.Post, error) {
+	args := mock.Called(post)
+	result := args.Get(0)
+	return result.(*entity.Post), args.Error(1)
+}
 
-	postRepoMock := repository.NewMockIPostRepo(ctrl)
+func (mock *MockRepository) FindAll() ([]entity.Post, error) {
+	args := mock.Called()
+	result := args.Get(0)
+	return result.([]entity.Post), args.Error(1)
+}
 
-	inputPost := entity.Post{Title: "text1", Text: "Text1"}
-	expectedPots := entity.Post{ID: 1, Title: "text1", Text: "Text1"}
+func TestSave(t *testing.T) {
+	mockRepo := new(MockRepository)
 
-	postRepoMock.
-		EXPECT().
-		Save(&inputPost).
-		Return(&expectedPots, nil)
+	inPost := entity.Post{Title: "text1", Text: "Text1"}
+	expPost := entity.Post{ID: 1, Title: "text1", Text: "Text1"}
 
-	s := NewPostService(postRepoMock)
-	res, err := s.Save(&inputPost)
+	mockRepo.On("Save", &inPost).Return(&expPost, nil)
+
+	service := NewPostService(mockRepo)
+	res, err := service.Save(&inPost)
+	mockRepo.AssertExpectations(t)
+
 	assert.Nil(t, err, "Service should return with out a err")
-	assert.Equal(t, &expectedPots, res, "Service should return the same post as a mocked repo")
+	assert.Equal(t, res, &expPost, "Service should return the same expPost as a mocked repo")
+}
+
+func TestFindAll(t *testing.T) {
+	mockRepo := new(MockRepository)
+
+	post := entity.Post{ID: 1, Title: "text1", Text: "Text1"}
+
+	mockRepo.On("FindAll").Return([]entity.Post{post}, nil)
+
+	service := NewPostService(mockRepo)
+	res, err := service.FindAll()
+	mockRepo.AssertExpectations(t)
+
+	assert.Nil(t, err, "Service should return with out a err")
+	assert.Equal(t, res, []entity.Post{post}, "Service should return the same post as a mocked repo")
 }
 
 func Test_service_Validate(t *testing.T) {
