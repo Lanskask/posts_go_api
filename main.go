@@ -21,7 +21,8 @@ func main() {
 	postController := controller.NewPostController(postService)
 
 	//rout := router.NewMuxRouter()
-	rout := router.NewChiRouter()
+	//rout := router.NewChiRouter()
+	rout := router.NewGinRouter()
 
 	rout.Get("/", simplePrt)
 	rout.Get("/posts", postController.GetPosts)

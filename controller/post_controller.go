@@ -9,16 +9,16 @@ import (
 	"service"
 )
 
-type IPostController interface {
+type PostController interface {
 	GetPosts(resp http.ResponseWriter, req *http.Request)
 	AddPost(resp http.ResponseWriter, req *http.Request)
 }
 
 type postController struct {
-	service service.IPostService
+	service service.PostService
 }
 
-func NewPostController(service service.IPostService) *postController {
+func NewPostController(service service.PostService) *postController {
 	return &postController{service: service}
 }
 
