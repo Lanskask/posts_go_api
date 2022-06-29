@@ -9,7 +9,7 @@ import (
 	"repository"
 )
 
-type IPostService interface {
+type PostService interface {
 	Validate(post *entity.Post) error
 	Save(post *entity.Post) (*entity.Post, error)
 	FindAll() ([]entity.Post, error)
@@ -19,7 +19,7 @@ type service struct {
 	repo repository.PostRepo
 }
 
-func NewPostService(repo repository.PostRepo) IPostService {
+func NewPostService(repo repository.PostRepo) PostService {
 	return &service{repo: repo}
 }
 

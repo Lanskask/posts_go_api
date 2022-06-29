@@ -4,7 +4,8 @@ import (
 	"net/http"
 )
 
-type handleFunc = func(res http.ResponseWriter, req *http.Request)
+//type handleFunc = func(res http.ResponseWriter, req *http.Request)
+type handleFunc = func(http.ResponseWriter, *http.Request)
 
 type Router interface {
 	Get(uri string, f handleFunc)
