@@ -100,29 +100,3 @@ func (r *SQLiteRepo) Delete(post *entity.Post) (int64, error) {
 	}
 	return id, nil
 }
-
-// ------------------
-func (s *SQLiteRepo) Save2(post *entity.Post) (*entity.Post, error) {
-	db, err := sql.Open("sqlite3", dbFile)
-	if err != nil {
-		return nil, fmt.Errorf("error openning a database: %s", err)
-	}
-	defer db.Close()
-
-	tx, err := db.Begin()
-	if err != nil {
-		return nil, err
-	}
-	stmt, err := tx.Prepare(fmt.Sprintf("insert into %s (id, title, txt) values (?,?,?)", tableName))
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	_, err = stmt.Exec(post.ID, post.Title, post.Text)
-	if err != nil {
-		return nil, fmt.Errorf("error executing a query: %s", err)
-	}
-
-	return post, nil
-}
