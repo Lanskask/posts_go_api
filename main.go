@@ -16,7 +16,7 @@ func main() {
 	config.LoadConfig()
 
 	//repo, _ := repository.NewFirebaseRepo()
-	repo, _ := repository.NewSQLiteRepo()
+	repo, _ := repository.NewSQLiteRepo(false)
 
 	postService := service.NewPostService(repo)
 	postController := controller.NewPostController(postService)

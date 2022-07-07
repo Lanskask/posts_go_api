@@ -33,6 +33,14 @@ func (mock *MockRepository) FindAll() ([]entity.Post, error) {
 	return result.([]entity.Post), args.Error(1)
 }
 
+func (mock *MockRepository) Truncate() error {
+	return nil
+}
+
+func (mock *MockRepository) CloseDB() error {
+	return nil
+}
+
 func TestSave(t *testing.T) {
 	mockRepo := new(MockRepository)
 

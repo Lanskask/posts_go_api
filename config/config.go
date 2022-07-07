@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/joho/godotenv"
@@ -17,10 +16,12 @@ func LoadConfig() {
 	if loaded {
 		return
 	}
-	err := godotenv.Load(confFileName)
+	rootPath := GetAbsRootPath()
 
-	if err != nil {
-		log.Fatalf(fmt.Sprintf("Error loading %s file", confFileName))
+	absProfilePath := rootPath + "/" + confFileName
+
+	if err := godotenv.Load(absProfilePath); err != nil {
+		log.Fatalf("Error loading %s file", confFileName)
 	}
 	loaded = true
 }
