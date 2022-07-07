@@ -1,34 +1,42 @@
 package repository
 
 import (
+	"config"
 	"database/sql"
 	"entity"
+	"errors"
 	"fmt"
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-const (
-	dbFile = "./posts.db"
+var (
+	dbFile = "posts.db"
+	dbPath = config.AbsPathFromProjRoot(dbFile)
 )
 
 type SQLiteRepo struct {
 	db *sql.DB
 }
 
-func NewSQLiteRepo() (*SQLiteRepo, error) {
-	os.Remove(dbFile)
-	db, err := sql.Open("sqlite3", dbFile)
+func NewSQLiteRepo(createNew bool) (*SQLiteRepo, error) {
+	if createNew {
+		err := os.Remove(dbPath)
+		if !errors.Is(err, os.ErrNotExist) {
+			return nil, fmt.Errorf("failed to remove a file %s: %s", dbPath, err)
+		}
+	}
+
+	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		return nil, fmt.Errorf("error openning a database: %s", err)
 	}
-	defer db.Close()
 
-	sqlStmt := fmt.Sprintf(`
-	create table %s (id integer not null primary key, title text, txt text);
-	delete from %s;
-	`, tableName, tableName)
+	sqlStmt := fmt.Sprintf(
+		`CREATE TABLE IF NOT EXISTS %s (id integer not null primary key, title text, txt text)`,
+		tableName,
+	)
 
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
@@ -38,14 +46,8 @@ func NewSQLiteRepo() (*SQLiteRepo, error) {
 	return &SQLiteRepo{db: db}, nil
 }
 
-func (s *SQLiteRepo) Save(post *entity.Post) (*entity.Post, error) {
-	db, err := sql.Open("sqlite3", dbFile)
-	if err != nil {
-		return nil, fmt.Errorf("error openning a database: %s", err)
-	}
-	defer db.Close()
-
-	res, err := db.Exec(fmt.Sprintf("insert into %s (id, title, txt) values (?, ?, ?)", tableName), post.ID, post.Title, post.Text)
+func (r *SQLiteRepo) Save(post *entity.Post) (*entity.Post, error) {
+	res, err := r.db.Exec(fmt.Sprintf("insert into %s (id, title, txt) values (?, ?, ?)", tableName), post.ID, post.Title, post.Text)
 	if err != nil {
 		return nil, fmt.Errorf("error executing a query: %s", err)
 	}
@@ -57,18 +59,13 @@ func (s *SQLiteRepo) Save(post *entity.Post) (*entity.Post, error) {
 	return post, nil
 }
 
-func (s *SQLiteRepo) FindAll() ([]entity.Post, error) {
-	db, err := sql.Open("sqlite3", dbFile)
-	if err != nil {
-		return nil, fmt.Errorf("error openning a database: %s", err)
-	}
-	defer db.Close()
-
+func (r *SQLiteRepo) FindAll() ([]entity.Post, error) {
 	var posts []entity.Post
-	rows, err := db.Query(fmt.Sprintf("select * from %s", tableName))
+	rows, err := r.db.Query(fmt.Sprintf("select * from %s", tableName))
 	if err != nil {
 		return nil, fmt.Errorf("error selecting all from posts: %s", err)
 	}
+
 	for rows.Next() {
 		var post entity.Post
 		if err := rows.Scan(&post.ID, &post.Title, &post.Text); err != nil {
@@ -83,13 +80,7 @@ func (s *SQLiteRepo) FindAll() ([]entity.Post, error) {
 }
 
 func (r *SQLiteRepo) Delete(post *entity.Post) (int64, error) {
-	db, err := sql.Open("sqlite3", dbFile)
-	if err != nil {
-		return 0, fmt.Errorf("error openning a database: %s", err)
-	}
-	defer db.Close()
-
-	res, err := db.Exec(fmt.Sprintf("delete from %s where id = ?", tableName), post.ID)
+	res, err := r.db.Exec(fmt.Sprintf("DELETE FROM %s WHERE id = ?", tableName), post.ID)
 	if err != nil {
 		return 0, fmt.Errorf("err executing a delete: %s", err)
 	}
@@ -101,28 +92,17 @@ func (r *SQLiteRepo) Delete(post *entity.Post) (int64, error) {
 	return id, nil
 }
 
-// ------------------
-func (s *SQLiteRepo) Save2(post *entity.Post) (*entity.Post, error) {
-	db, err := sql.Open("sqlite3", dbFile)
+func (r *SQLiteRepo) Truncate() error {
+	_, err := r.db.Exec(fmt.Sprintf("DELETE FROM %s", tableName))
 	if err != nil {
-		return nil, fmt.Errorf("error openning a database: %s", err)
+		return fmt.Errorf("err executing a truncate: %s", err)
 	}
-	defer db.Close()
+	return nil
+}
 
-	tx, err := db.Begin()
-	if err != nil {
-		return nil, err
+func (r *SQLiteRepo) CloseDB() error {
+	if err := r.db.Close(); err != nil {
+		return fmt.Errorf("error closing the db connecting %s", err)
 	}
-	stmt, err := tx.Prepare(fmt.Sprintf("insert into %s (id, title, txt) values (?,?,?)", tableName))
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	_, err = stmt.Exec(post.ID, post.Title, post.Text)
-	if err != nil {
-		return nil, fmt.Errorf("error executing a query: %s", err)
-	}
-
-	return post, nil
+	return nil
 }
