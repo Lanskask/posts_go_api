@@ -22,31 +22,19 @@ go tool cover -html=coverage.out
 
 ## How to run Docker
 
-
-For multistage
+Build and run 
 ```shell
 docker build -t post_api -f multistage.Dockerfile .
 
 docker run -p 8081:8081 --name=post_api_1 --env-file .profile post_api
-docker run -p 8081:8081 --name sh_in_demo -it post_api /bin/sh  
 ```
 
-For build image
+To check env variables
 ```shell
-docker build -t demo_proj_build -f build.Dockerfile .
-
-docker run -p 8081:8081 demo_proj_build
-docker run -it demo_proj_build /bin/sh
+docker run --env-file .profile post_api env | grep -E 'GOOGLE_APPLICATION_CREDENTIALS|PORT'
 ```
 
-For build on golang docker image
+To `sh` in image
 ```shell
-docker build -t demo_proj_build_on_go -f build_on_go_image.Dockerfile .
-
-docker run -p 8081:8081 demo_proj_build_on_go
-
-docker run -p 8081:8081 --env-file .profile demo_proj_build_on_go 
-docker run -p 8081:8081 --env-file .profile demo_proj_build_on_go env | grep -E 'GOOGLE_APPLICATION_CREDENTIALS|PORT' 
-
-docker run -it demo_proj_build_on_go /bin/sh
+docker run --name sh_to_posts -it post_api /bin/sh
 ```
