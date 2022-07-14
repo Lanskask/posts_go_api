@@ -1,6 +1,8 @@
 # Posts with Clean architecture
 
-Default port: 8080  
+Default port: `8080`  
+DB name: `posts`
+
 You can change env variables in `.profile` file
 
 Connect your firebase project and   
@@ -10,8 +12,6 @@ Also add a `.profile` file with the following content
 ```shell
 export GOOGLE_APPLICATION_CREDENTIALS=./your-firebase-admin-sdk-key.json
 ```
-
-
 
 ## How to run test coverage
 
@@ -38,3 +38,7 @@ To `sh` in image
 ```shell
 docker run --name sh_to_posts -it post_api /bin/sh
 ```
+
+## TODO
+ - [ ] Check manually work with firebase (check loading of the firebase credentials)
+ - [ ] Make choice what DB and router to use
