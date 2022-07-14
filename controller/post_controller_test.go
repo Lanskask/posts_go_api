@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"posts_api/config"
 	"posts_api/entity"
 	"posts_api/repository"
 	"posts_api/service"
@@ -54,14 +55,8 @@ func TestAddPost(t *testing.T) {
 }
 
 func TestGetPosts(t *testing.T) {
-	// initialization
-	//repo, err := repository.NewSQLiteRepo(false)
-	//repo, err := repository.NewMemRepo()
-	repo, err := repository.NewFirebaseRepo()
+	repo, _ := repository.NewMemRepo()
 
-	if err != nil {
-		t.Fatalf("failed to create a repo: %s", err)
-	}
 	_ = repo.Truncate()
 
 	serv := service.NewPostService(repo)
@@ -106,6 +101,31 @@ func TestGetPosts(t *testing.T) {
 	}
 
 	cleanDB(repo)
+}
+
+func getRepo(t *testing.T, sysConf config.SystemConfig) repository.PostRepo {
+	var repo repository.PostRepo
+	var err error
+
+	switch sysConf.DB {
+	case config.FIREBASE:
+		// repo, err = repository.NewFirebaseRepo()
+		// if err != nil {
+		// 	t.Fatalf("Failed to create Firebase repo: %s", err)
+		// }
+		t.Skipf("test is skipped because there used a Firebase repo")
+	case config.MEM:
+		repo, err = repository.NewMemRepo()
+		if err != nil {
+			t.Fatalf("Failed to create Mem repo: %s", err)
+		}
+	case config.SQLITE:
+		repo, err = repository.NewSQLiteRepo(true)
+		if err != nil {
+			t.Fatalf("Failed to create SQLite repo: %s", err)
+		}
+	}
+	return repo
 }
 
 func ComparePosts(a, b entity.Post) bool {

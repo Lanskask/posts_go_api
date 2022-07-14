@@ -1,8 +1,8 @@
 name: Go Test and Build
 
 on:
-  pull_request:
-    branches: [ "master" ]
+#  pull_request:
+#    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
