@@ -22,6 +22,7 @@ ENV PORT $DEFAULT_PORT
 WORKDIR /app
 COPY .profile ./.profile
 COPY posts-api-firebase.json ./posts-api-firebase.json
+COPY system_config.yaml ./system_config.yaml
 COPY --from=build-env /$APP_NAME .
 
 EXPOSE $DEFAULT_PORT

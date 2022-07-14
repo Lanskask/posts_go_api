@@ -6,7 +6,12 @@ ENV APP_NAME=$APP_NAME
 ENV DEFAULT_PORT=$DEFAULT_PORT
 
 WORKDIR /app
+
+COPY .profile ./.profile
+COPY posts-api-firebase.json ./posts-api-firebase.json
+COPY system_config.yaml ./system_config.yaml
 COPY go.mod ./go.mod
+
 RUN go mod download
 
 COPY . ./
