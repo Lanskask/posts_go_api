@@ -23,6 +23,7 @@ ARG APP_NAME=posts-go-api
 ENV APP_NAME $APP_NAME
 ENV PORT $DEFAULT_PORT
 
+COPY .profile ./.profile
 COPY --from=build-env /$APP_NAME .
 #COPY --from=build-env /posts-go-api .
 

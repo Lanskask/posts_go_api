@@ -22,7 +22,7 @@ For multistage
 docker build -t demonstration_project -f multistage.Dockerfile .
 
 docker run -p 8081:8081 demonstration_project
-docker run  -p 8081:8081 demonstration_project:multistage
+docker run -p 8081:8081 demonstration_project:multistage
 ```
 
 For build image
