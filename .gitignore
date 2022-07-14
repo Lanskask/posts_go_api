@@ -1,5 +1,4 @@
-posts-api-firebase.json
+**/posts-api-firebase.json
 README_ignore.md
 coverage.out
 posts.db
-.profile

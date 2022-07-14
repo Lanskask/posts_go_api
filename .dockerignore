@@ -1,0 +1,12 @@
+.idea/
+.github/
+.git/
+.dockerignore
+.gitignore
+*Dockerfile
+
+README.md
+README_ignore.md
+
+coverage.out
+posts.db

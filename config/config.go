@@ -6,22 +6,15 @@ import (
 	"github.com/joho/godotenv"
 )
 
-const (
-	confFileName = ".profile"
-)
-
 var loaded = false
 
-func LoadConfig() {
+func LoadConfig(fileName string) {
 	if loaded {
 		return
 	}
-	rootPath := GetAbsRootPath()
 
-	absProfilePath := rootPath + "/" + confFileName
-
-	if err := godotenv.Load(absProfilePath); err != nil {
-		log.Fatalf("Error loading %s file", confFileName)
+	if err := godotenv.Load(fileName); err != nil {
+		log.Fatalf("Error loading %s file: %s", fileName, err)
 	}
 	loaded = true
 }

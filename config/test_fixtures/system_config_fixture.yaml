@@ -1,0 +1,5 @@
+db: # firebase, mem, sqlite
+  firebase
+router: # chi, fiber, gin, mux
+  fiber
+

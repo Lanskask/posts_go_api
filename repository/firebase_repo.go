@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"posts_api/config"
 	"posts_api/entity"
 
 	"cloud.google.com/go/firestore"
@@ -19,10 +18,8 @@ type FirebaseRepo struct {
 }
 
 func NewFirebaseRepo() (*FirebaseRepo, error) {
-	config.LoadConfig()
-
 	credFile := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
-	opt := option.WithCredentialsFile(config.AbsPathFromProjRoot(credFile))
+	opt := option.WithCredentialsFile(credFile) // config.AbsPathFromProjRoot(credFile)
 
 	fApp, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
