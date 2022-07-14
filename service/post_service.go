@@ -2,11 +2,11 @@ package service
 
 import (
 	"crypto/rand"
-	"entity"
 	"errors"
 	"math"
 	"math/big"
-	"repository"
+	"posts_api/entity"
+	"posts_api/repository"
 )
 
 type PostService interface {

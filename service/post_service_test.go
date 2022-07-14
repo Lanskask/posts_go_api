@@ -1,9 +1,9 @@
 package service
 
 import (
-	"entity"
 	"errors"
-	"repository"
+	"posts_api/entity"
+	"posts_api/repository"
 	"strings"
 	"testing"
 
