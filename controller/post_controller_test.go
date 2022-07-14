@@ -3,13 +3,13 @@ package controller
 import (
 	"bytes"
 	"encoding/json"
-	"entity"
 	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"repository"
-	"service"
+	"posts_api/entity"
+	"posts_api/repository"
+	"posts_api/service"
 	"sort"
 	"testing"
 )

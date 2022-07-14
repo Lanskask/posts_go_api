@@ -1,12 +1,12 @@
 package repository
 
 import (
-	"config"
 	"database/sql"
-	"entity"
 	"errors"
 	"fmt"
 	"os"
+	"posts_api/config"
+	"posts_api/entity"
 
 	_ "github.com/mattn/go-sqlite3"
 )

@@ -1,11 +1,11 @@
 package repository
 
 import (
-	"config"
 	"context"
-	"entity"
 	"fmt"
 	"os"
+	"posts_api/config"
+	"posts_api/entity"
 
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"

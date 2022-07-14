@@ -1,12 +1,12 @@
 package main
 
 import (
-	"config"
-	"controller"
 	"log"
-	"repository"
-	"router"
-	"service"
+	"posts_api/config"
+	"posts_api/controller"
+	"posts_api/repository"
+	"posts_api/router"
+	"posts_api/service"
 )
 
 const port = ":8000"
