@@ -10,7 +10,6 @@ replace (
 
 require (
 	entity v0.0.0-00010101000000-000000000000
-	github.com/golang/mock v1.6.0
 	github.com/stretchr/testify v1.7.4
 	repository v0.0.0-00010101000000-000000000000
 )
@@ -34,6 +33,7 @@ require (
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
+	github.com/mattn/go-sqlite3 v1.14.13 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/stretchr/objx v0.4.0 // indirect
 	go.opencensus.io v0.23.0 // indirect

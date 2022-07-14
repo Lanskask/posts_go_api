@@ -1,0 +1,9 @@
+.idea/
+.gitignore
+coverage.out
+multistage.Dockerfile
+posts.db
+README.md
+README_ignore.md
+.dockerignore
+posts-go-api

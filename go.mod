@@ -42,7 +42,7 @@ require (
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
 	github.com/goccy/go-json v0.9.8 // indirect
 	github.com/gofiber/adaptor/v2 v2.1.24 // indirect
-	github.com/gofiber/fiber/v2 v2.34.1 // indirect
+	github.com/gofiber/fiber/v2 v2.35.0 // indirect
 	github.com/gofiber/utils v0.1.2 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
