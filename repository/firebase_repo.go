@@ -19,8 +19,6 @@ type FirebaseRepo struct {
 }
 
 func NewFirebaseRepo() (*FirebaseRepo, error) {
-	config.LoadConfig()
-
 	credFile := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
 	opt := option.WithCredentialsFile(config.AbsPathFromProjRoot(credFile))
 

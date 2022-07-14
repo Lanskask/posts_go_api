@@ -16,9 +16,9 @@ func LoadConfig() {
 	if loaded {
 		return
 	}
-	rootPath := GetAbsRootPath()
-
-	absProfilePath := rootPath + "/" + confFileName
+	//rootPath := GetAbsRootPath() // TODO: Check and remove it completely. As I understand it was necessary for tests
+	//absProfilePath := rootPath + "/" + confFileName
+	absProfilePath := confFileName
 
 	if err := godotenv.Load(absProfilePath); err != nil {
 		log.Fatalf("Error loading %s file: %s", confFileName, err)

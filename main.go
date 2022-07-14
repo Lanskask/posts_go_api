@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"posts_api/config"
 	"posts_api/controller"
 	"posts_api/repository"
@@ -9,7 +10,7 @@ import (
 	"posts_api/service"
 )
 
-const port = ":8000"
+//const port = ":8000"
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
@@ -30,9 +31,18 @@ func main() {
 	rout.Get("/posts", postController.GetPosts)
 	rout.Post("/posts", postController.AddPost)
 
-	log.Println("Server listening on port", port)
+	port := getPort()
+	log.Printf("Server listening on port %s.\n", port)
 	if err := rout.ListenAndServe(port); err != nil {
 		log.Fatalf("err: %s\n", err)
 	}
 
+}
+
+func getPort() string {
+	var port string
+	if port = os.Getenv("PORT"); port == "" {
+		return ":" + "8080"
+	}
+	return ":" + port
 }

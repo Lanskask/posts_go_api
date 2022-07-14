@@ -1,9 +1,12 @@
 .idea/
+.github/
+.git/
+.dockerignore
 .gitignore
-coverage.out
-multistage.Dockerfile
-posts.db
+*Dockerfile
+
 README.md
 README_ignore.md
-.dockerignore
-posts-go-api
+
+coverage.out
+posts.db

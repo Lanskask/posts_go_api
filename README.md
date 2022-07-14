@@ -1,12 +1,17 @@
 # Posts with Clean architecture
 
-Connect your firebase project and 
+Default port: 8080  
+You can change env variables in `.profile` file
+
+Connect your firebase project and   
 put `firebase-adminsdk.json` key file to the root of this project.
 
-Also add a `.profile` file with the following content
+Also add a `.profile` file with the following content  
 ```shell
 export GOOGLE_APPLICATION_CREDENTIALS=./your-firebase-admin-sdk-key.json
 ```
+
+
 
 ## How to run test coverage
 
@@ -17,12 +22,13 @@ go tool cover -html=coverage.out
 
 ## How to run Docker
 
+
 For multistage
 ```shell
-docker build -t demonstration_project -f multistage.Dockerfile .
+docker build -t post_api -f multistage.Dockerfile .
 
-docker run -p 8081:8081 demonstration_project
-docker run -p 8081:8081 demonstration_project:multistage
+docker run -p 8081:8081 --name=post_api_1 --env-file .profile post_api
+docker run -p 8081:8081 --name sh_in_demo -it post_api /bin/sh  
 ```
 
 For build image

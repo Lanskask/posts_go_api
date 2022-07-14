@@ -6,11 +6,13 @@ ARG APP_NAME=posts-go-api
 ENV APP_NAME=$APP_NAME
 
 WORKDIR /app
+COPY go.mod ./go.mod
+RUN go mod download
+
 COPY . ./
 #COPY .profile ./.profile
 
 #RUN cd router && go mod tidy
-#RUN go mod download
 
 #RUN CGO_ENABLED=0 go build -v -o /$APP_NAME
 RUN CGO_ENABLED=0 go build -o /posts-go-api
@@ -23,6 +25,7 @@ ARG APP_NAME=posts-go-api
 ENV APP_NAME $APP_NAME
 ENV PORT $DEFAULT_PORT
 
+WORKDIR /app
 COPY .profile ./.profile
 COPY --from=build-env /$APP_NAME .
 #COPY --from=build-env /posts-go-api .
