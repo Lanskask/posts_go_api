@@ -17,6 +17,7 @@ go tool cover -html=coverage.out
 
 ## How to run Docker
 
+For multistage
 ```shell
 docker build -t demonstration_project -f multistage.Dockerfile .
 
@@ -38,7 +39,8 @@ docker build -t demo_proj_build_on_go -f build_on_go_image.Dockerfile .
 
 docker run -p 8081:8081 demo_proj_build_on_go
 
-docker run -p 8081:8081 demo_proj_build_on_go --env-file
+docker run -p 8081:8081 --env-file .profile demo_proj_build_on_go 
+docker run -p 8081:8081 --env-file .profile demo_proj_build_on_go env | grep -E 'GOOGLE_APPLICATION_CREDENTIALS|PORT' 
 
 docker run -it demo_proj_build_on_go /bin/sh
 ```
