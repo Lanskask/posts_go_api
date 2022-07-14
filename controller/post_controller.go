@@ -2,11 +2,11 @@ package controller
 
 import (
 	"encoding/json"
-	"entity"
-	"errs"
 	"fmt"
 	"net/http"
-	"service"
+	"posts_api/entity"
+	"posts_api/errs"
+	"posts_api/service"
 )
 
 type PostController interface {

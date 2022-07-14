@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"entity"
+	"posts_api/entity"
 	"sync"
 )
 
